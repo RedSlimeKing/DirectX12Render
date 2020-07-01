@@ -24,7 +24,7 @@ bool Window::Initialize() {
 		return false;
 	}
 	// Create the window
-	window = SDL_CreateWindow("DirectXProject", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, x, y, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("DirectXProject", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, x, y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 	
 	if(window == nullptr) {
 		printf("SDL_Error: %s\n", SDL_GetError());

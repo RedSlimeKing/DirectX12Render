@@ -44,9 +44,9 @@ private:
 
 private:
 	static DirectXAPI* instance;
-	// The number of swap chain back buffers.
+	// The number of back buffers for the swap chain.
 	static const uint8_t g_NumFrames = 3;
-	// Use WARP adapter
+	// Use WARP adapter - software rasterizer (Windows Advanced Rasterization Platform - WARP) 
 	bool g_UseWarp = false;
 
 	uint32_t g_ClientWidth = 1280;
@@ -59,20 +59,34 @@ private:
 	RECT g_WindowRect;
 
 	// DirectX 12 Objects
+	// Dx12 Device object
 	ComPtr<ID3D12Device2> g_Device;
+	// Dx12 command queue
 	ComPtr<ID3D12CommandQueue> g_CommandQueue;
+	// IDXGISwapChain4 interface defines swap chain - Responsible for resenting the rendered image to window
+	// Created with a number of back buffers resources
 	ComPtr<IDXGISwapChain4> g_SwapChain;
+	// Pointers to said back buffers tracked
+	// all back buffers &  textures  are referenced by ID3D12Resource
 	ComPtr<ID3D12Resource> g_BackBuffers[g_NumFrames];
+	// GPU commands are recorded into ID3D12GraphicsCommandList - uses a single thread with more commandList using different threads
 	ComPtr<ID3D12GraphicsCommandList> g_CommandList;
+	
 	ComPtr<ID3D12CommandAllocator> g_CommandAllocators[g_NumFrames];
+	// Used to store descriptor heap that contains render target views for swap chain back buffers
 	ComPtr<ID3D12DescriptorHeap> g_RTVDescriptorHeap;
+	// size of single rvt descriptor 
 	UINT g_RTVDescriptorSize;
+	// Depending on flip odel of swap chain the index of current back buffer may not be sequential / hold creent index
 	UINT g_CurrentBackBufferIndex;
 
 	// Synchronization objects
 	ComPtr<ID3D12Fence> g_Fence;
+	// the next fence alue to signal is stored below
 	uint64_t g_FenceValue = 0;
+	// ised to track fence values that used to signal command queue for particular frame
 	uint64_t g_FrameFenceValues[g_NumFrames] = {};
+	// handle to OS event object used to receive the notification that fence has reached value
 	HANDLE g_FenceEvent;
 
 	// By default, enable V-Sync.
@@ -84,6 +98,8 @@ private:
 	bool g_Fullscreen = false;
 
 	//Rendering space
+	// Serves as backing memory for recording Gpu commands into command list cannot be reused unless all commands that have been recorded
+	// are finished executing on gpu
 	ComPtr<ID3D12CommandAllocator> commandAllocator;
 	ComPtr<ID3D12Resource> backBuffer;
 

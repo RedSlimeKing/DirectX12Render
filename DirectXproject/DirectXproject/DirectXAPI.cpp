@@ -72,6 +72,7 @@ ComPtr<IDXGIAdapter4> DirectXAPI::GetAdapter(bool useWarp){
 ComPtr<ID3D12Device2> DirectXAPI::CreateDevice(ComPtr<IDXGIAdapter4> adapter){
 	ComPtr<ID3D12Device2> d3d12Device2;
 	ThrowIfFailed(D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&d3d12Device2)));
+
 	// Enable debug messages in debug mode.
 	#if defined(_DEBUG)
 	ComPtr<ID3D12InfoQueue> pInfoQueue;
@@ -311,36 +312,43 @@ void DirectXAPI::StartRender(){
 
 	// Clear the render target.
 	{
+		//		Creates transition reource barrier by default, will transition all sub-resources to same state
 		CD3DX12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(backBuffer.Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
-
 		g_CommandList->ResourceBarrier(1, &barrier);
+
+		// now bck buffer cn be cleared
 		FLOAT clearColor[] = { 0.8f, 0.3f, 0.1f, 1.0f }; //= { 0.4f, 0.6f, 0.9f, 1.0f };
 		CD3DX12_CPU_DESCRIPTOR_HANDLE rtv(g_RTVDescriptorHeap->GetCPUDescriptorHandleForHeapStart(), g_CurrentBackBufferIndex, g_RTVDescriptorSize);
 
+		//                                               D3D12_rect v if null clears the entire resource view
 		g_CommandList->ClearRenderTargetView(rtv, clearColor, 0, nullptr);
 	}
 
 }
 
 void DirectXAPI::Render(){
-	// Present
+	// Present - puts rendered result to screen
 	{
 		CD3DX12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
 			backBuffer.Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
 		g_CommandList->ResourceBarrier(1, &barrier);
+		// commandList->Close() must be called be for executing
 		ThrowIfFailed(g_CommandList->Close());
 
 		ID3D12CommandList* const commandLists[] = {
 			g_CommandList.Get()
 		};
+		// EXECUTES commands
 		g_CommandQueue->ExecuteCommandLists(_countof(commandLists), commandLists);
 		UINT syncInterval = g_VSync ? 1 : 0;
 		UINT presentFlags = g_TearingSupported && !g_VSync ? DXGI_PRESENT_ALLOW_TEARING : 0;
 		ThrowIfFailed(g_SwapChain->Present(syncInterval, presentFlags));
 
+		// Signal method appends fence value to end of command queue
 		g_FrameFenceValues[g_CurrentBackBufferIndex] = Signal(g_CommandQueue, g_Fence, g_FenceValue);
 		g_CurrentBackBufferIndex = g_SwapChain->GetCurrentBackBufferIndex();
 
+		// Prevents resource from being overwritten before put on screen
 		WaitForFenceValue(g_Fence, g_FrameFenceValues[g_CurrentBackBufferIndex], g_FenceEvent);
 	}
 	commandAllocator = nullptr;
@@ -376,4 +384,5 @@ void DirectXAPI::Resize(uint32_t width, uint32_t height){
 void DirectXAPI::Destroy(){
 	// Make sure the command queue has finished all commands before closing.
 	Flush(g_CommandQueue, g_Fence, g_FenceValue, g_FenceEvent);
+	::CloseHandle(g_FenceEvent);
 }

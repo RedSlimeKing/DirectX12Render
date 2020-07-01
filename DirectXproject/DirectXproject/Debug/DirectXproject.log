@@ -1,8 +1,3 @@
-﻿  DirectXAPI.cpp
-  RenderEngine.cpp
-  Triangle.cpp
-c:\gamedev\sdl2-2.0.5\include\sdl_surface.h(70): warning C4099: 'SDL_Surface': type name first seen using 'class' now seen using 'struct' (compiling source file RenderEngine.cpp)
-  c:\gamedev\sdl2-2.0.5\include\sdl_surface.h(69): note: see declaration of 'SDL_Surface' (compiling source file RenderEngine.cpp)
-c:\gamedev\sdl2-2.0.5\include\sdl_video.h(90): warning C4099: 'SDL_Window': type name first seen using 'class' now seen using 'struct' (compiling source file RenderEngine.cpp)
-  c:\users\fires\source\repos\directxproject\directxproject\window.h(6): note: see declaration of 'SDL_Window' (compiling source file RenderEngine.cpp)
-  DirectXproject.vcxproj -> C:\Users\fires\source\repos\DirectXproject\Debug\DirectXproject.exe
+﻿FXC : error X3084: 'numthreads(X,Y,Z)' attribute expected, where 'X,Y,Z' are the dimensions of the thread group
+  
+  compilation failed; no code produced
