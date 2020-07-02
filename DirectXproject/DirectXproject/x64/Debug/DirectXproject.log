@@ -1,20 +1,4 @@
-﻿  DirectXAPI.cpp
-  GameManager.cpp
-  main.cpp
-  RenderEngine.cpp
-  Timer.cpp
-  Triangle.cpp
-  Window.cpp
-c:\gamedev\sdl2-2.0.5\include\sdl_surface.h(70): warning C4099: 'SDL_Surface': type name first seen using 'class' now seen using 'struct' (compiling source file RenderEngine.cpp)
-  c:\gamedev\sdl2-2.0.5\include\sdl_surface.h(69): note: see declaration of 'SDL_Surface' (compiling source file RenderEngine.cpp)
-c:\gamedev\sdl2-2.0.5\include\sdl_video.h(90): warning C4099: 'SDL_Window': type name first seen using 'class' now seen using 'struct' (compiling source file RenderEngine.cpp)
-  c:\users\fires\documents\programming projects\directx12render\directxproject\directxproject\window.h(6): note: see declaration of 'SDL_Window' (compiling source file RenderEngine.cpp)
-c:\users\fires\documents\programming projects\directx12render\directxproject\directxproject\window.h(6): warning C4099: 'SDL_Window': type name first seen using 'struct' now seen using 'class' (compiling source file GameManager.cpp)
-  c:\gamedev\sdl2-2.0.5\include\sdl_video.h(90): note: see declaration of 'SDL_Window' (compiling source file GameManager.cpp)
-c:\users\fires\documents\programming projects\directx12render\directxproject\directxproject\window.h(7): warning C4099: 'SDL_Surface': type name first seen using 'struct' now seen using 'class' (compiling source file GameManager.cpp)
-  c:\gamedev\sdl2-2.0.5\include\sdl_surface.h(69): note: see declaration of 'SDL_Surface' (compiling source file GameManager.cpp)
-c:\gamedev\sdl2-2.0.5\include\sdl_surface.h(70): warning C4099: 'SDL_Surface': type name first seen using 'class' now seen using 'struct' (compiling source file Window.cpp)
-  c:\gamedev\sdl2-2.0.5\include\sdl_surface.h(69): note: see declaration of 'SDL_Surface' (compiling source file Window.cpp)
-c:\gamedev\sdl2-2.0.5\include\sdl_video.h(90): warning C4099: 'SDL_Window': type name first seen using 'class' now seen using 'struct' (compiling source file Window.cpp)
-  c:\users\fires\documents\programming projects\directx12render\directxproject\directxproject\window.h(6): note: see declaration of 'SDL_Window' (compiling source file Window.cpp)
+﻿  compilation object save succeeded; see C:\Users\fires\Documents\Programming Projects\DirectX12Render\DirectXproject\x64\Debug\PixelShader.cso
+  compilation object save succeeded; see C:\Users\fires\Documents\Programming Projects\DirectX12Render\DirectXproject\x64\Debug\VertexShader.cso
+  DirectXAPI.cpp
   DirectXproject.vcxproj -> C:\Users\fires\Documents\Programming Projects\DirectX12Render\DirectXproject\x64\Debug\DirectXproject.exe
