@@ -3,16 +3,17 @@
 // Microsoft Window handler
 #include <Windows.h>
 
-class SDL_Window;
-class SDL_Surface;
+struct SDL_Window;
+struct SDL_Surface;
 
 class Window {
 private:
 	SDL_Window* window;
 	SDL_Surface* screenSurface;
 	int x, y;
+	bool isInit;
 public:
-	Window(int x_, int y_);
+	Window(int width, int height);
 	~Window();
 	
 	bool Initialize();
@@ -20,4 +21,5 @@ public:
 
 	inline SDL_Window* GetSDL_Window(){ return window; }
 	HWND GetWHD();
+	inline bool GetInitStatus(){ return isInit; }
 };

@@ -96,7 +96,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>C:\GameDev\SDL2-2.0.5\lib\x86\SDL2.lib;C:\GameDev\SDL2-2.0.5\lib\x86\SDL2main.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86\d3d12.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86\dxgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\GameDev\SDL2-2.0.5\lib\x86\SDL2.lib;C:\GameDev\SDL2-2.0.5\lib\x86\SDL2main.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86\d3d12.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86\dxgi.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86\dxguid.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86\d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -109,10 +109,10 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>C:\GameDev\SDL2-2.0.5\lib\x64\SDL2.lib;C:\GameDev\SDL2-2.0.5\lib\x64\SDL2main.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\d3d12.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\dxgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\GameDev\SDL2-2.0.5\lib\x64\SDL2.lib;C:\GameDev\SDL2-2.0.5\lib\x64\SDL2main.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\d3d12.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\dxgi.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\dxguid.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -136,7 +136,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>C:\GameDev\SDL2-2.0.5\lib\x86\SDL2.lib;C:\GameDev\SDL2-2.0.5\lib\x86\SDL2main.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86\d3d12.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86\dxgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\GameDev\SDL2-2.0.5\lib\x86\SDL2.lib;C:\GameDev\SDL2-2.0.5\lib\x86\SDL2main.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86\d3d12.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86\dxgi.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86\dxguid.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x86\d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -155,16 +155,17 @@
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);NDEBUG</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>C:\GameDev\SDL2-2.0.5\lib\x64\SDL2.lib;C:\GameDev\SDL2-2.0.5\lib\x64\SDL2main.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\d3d12.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\dxgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\GameDev\SDL2-2.0.5\lib\x64\SDL2.lib;C:\GameDev\SDL2-2.0.5\lib\x64\SDL2main.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\d3d12.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\dxgi.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\dxguid.lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DirectXAPI.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -174,35 +175,35 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="d3dx12.h" />
     <ClInclude Include="DirectXAPI.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Helpers.h" />
+    <ClInclude Include="Rect.h" />
     <ClInclude Include="RenderEngine.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+    <FxCompile Include="shader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.1</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.1</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.1</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.1</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="VertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.1</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.1</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.1</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.1</ShaderModel>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VSMain</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VSMain</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VSMain</EntryPointName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

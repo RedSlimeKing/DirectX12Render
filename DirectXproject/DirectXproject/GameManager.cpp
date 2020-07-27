@@ -7,8 +7,7 @@ GameManager::GameManager() {
 }
 
 GameManager::~GameManager() {
-	timer = nullptr;
-	delete timer;
+	
 }
 
 bool GameManager::Initialize() {

@@ -1,4 +1,4 @@
-﻿  compilation object save succeeded; see C:\Users\fires\Documents\Programming Projects\DirectX12Render\DirectXproject\x64\Debug\PixelShader.cso
-  compilation object save succeeded; see C:\Users\fires\Documents\Programming Projects\DirectX12Render\DirectXproject\x64\Debug\VertexShader.cso
-  DirectXAPI.cpp
+﻿  DirectXAPI.cpp
+c:\users\fires\documents\programming projects\directx12render\directxproject\directxproject\directxapi.cpp(263): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+c:\users\fires\documents\programming projects\directx12render\directxproject\directxproject\directxapi.cpp(264): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
   DirectXproject.vcxproj -> C:\Users\fires\Documents\Programming Projects\DirectX12Render\DirectXproject\x64\Debug\DirectXproject.exe

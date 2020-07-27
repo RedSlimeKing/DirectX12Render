@@ -17,7 +17,7 @@ int main(int argc, char* args[]){
 	ptr = nullptr;
 	delete ptr;
 
-	cout << "Program has run" << endl;
+	cout << "Program has ended run" << endl;
 
 	cin.get();
 

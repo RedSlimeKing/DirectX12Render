@@ -7,116 +7,96 @@
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
 
-// STL Headers
-#include <algorithm>
-#include <cassert>
-#include <chrono>
+#pragma comment (lib, "d3dcompiler.lib")
+
+
 
 // Windows Runtime Library. Needed for Microsoft::WRL::ComPtr<> template class.
 #include <wrl.h>
-using namespace Microsoft::WRL;
+
+#include "Rect.h"
 
 class DirectXAPI{
 public:
 	static DirectXAPI* GetInstance();
 
-	void Init();
-	void StartRender();
+	void Init(HWND windowhandle, Rect windowRect);
 	void Render();
 	void Resize(uint32_t width, uint32_t height);
 	void Destroy();
 private:
+	// For init DirectX
 	void EnableDebugLayer();
-	ComPtr<IDXGIAdapter4> GetAdapter(bool useWarp);
-	ComPtr<ID3D12Device2> CreateDevice(ComPtr<IDXGIAdapter4> adapter);
-	ComPtr<ID3D12CommandQueue> CreateCommandQueue(ComPtr<ID3D12Device2> device, D3D12_COMMAND_LIST_TYPE type);
+	Microsoft::WRL::ComPtr<IDXGIAdapter4> GetAdapter(bool useWarp);
+	Microsoft::WRL::ComPtr<ID3D12Device2> CreateDevice(Microsoft::WRL::ComPtr<IDXGIAdapter4> adapter);
+	Microsoft::WRL::ComPtr<ID3D12CommandQueue> CreateCommandQueue(Microsoft::WRL::ComPtr<ID3D12Device2> device, D3D12_COMMAND_LIST_TYPE type);
 	bool CheckTearingSupport();
-	ComPtr<IDXGISwapChain4> CreateSwapChain(HWND hWnd, ComPtr<ID3D12CommandQueue> commandQueue, uint32_t width, uint32_t height, uint32_t bufferCount);
-	ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(ComPtr<ID3D12Device2> device, D3D12_DESCRIPTOR_HEAP_TYPE type, uint32_t numDescriptors);
-	void UpdateRenderTargetViews(ComPtr<ID3D12Device2> device, ComPtr<IDXGISwapChain4> swapChain, ComPtr<ID3D12DescriptorHeap> descriptorHeap);
-	ComPtr<ID3D12CommandAllocator> CreateCommandAllocator(ComPtr<ID3D12Device2> device, D3D12_COMMAND_LIST_TYPE type);
-	ComPtr<ID3D12GraphicsCommandList> CreateCommandList(ComPtr<ID3D12Device2> device, ComPtr<ID3D12CommandAllocator> commandAllocator, D3D12_COMMAND_LIST_TYPE type);
-	ComPtr<ID3D12Fence> CreateFence(ComPtr<ID3D12Device2> device);
-	HANDLE CreateEventHandle();
-	uint64_t Signal(ComPtr<ID3D12CommandQueue> commandQueue, ComPtr<ID3D12Fence> fence, uint64_t& fenceValue);
-	void WaitForFenceValue(ComPtr<ID3D12Fence> fence, uint64_t fenceValue, HANDLE fenceEvent, std::chrono::milliseconds duration);
-	void Flush(ComPtr<ID3D12CommandQueue> commandQueue, ComPtr<ID3D12Fence> fence, uint64_t& fenceValue, HANDLE fenceEvent);
+	Microsoft::WRL::ComPtr<IDXGISwapChain4> CreateSwapChain(HWND hWnd, Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue, uint32_t width, uint32_t height, uint32_t bufferCount);
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(Microsoft::WRL::ComPtr<ID3D12Device2> device, D3D12_DESCRIPTOR_HEAP_TYPE type, uint32_t numDescriptors);
+	void UpdateRenderTargetViews(Microsoft::WRL::ComPtr<ID3D12Device2> device, Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain, Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap);
 
+	// Waiting for frame
+	void WaitForPreviousFrame();
+
+	// Temp here so I can load the triangle
+	void LoadAssets();
+
+	// Pre commands 
+	void PopulateCommandList();
 private:
 	static DirectXAPI* instance;
-	// The number of back buffers for the swap chain.
-	static const uint8_t g_NumFrames = 3;
-	// Use WARP adapter - software rasterizer (Windows Advanced Rasterization Platform - WARP) 
-	bool g_UseWarp = false;
-
-	uint32_t g_ClientWidth = 1280;
-	uint32_t g_ClientHeight = 720;
-
+	
 	// Set to true once the DX12 objects have been initialized.
-	bool g_IsInitialized = false;
+	bool mIsInitialized = false;
+	// By default, enable V-Sync.
+	bool mVSync = true;
+	bool mTearingSupported = false;
+	// By default, use windowed mode.
+	bool mFullscreen = false;
+	// Use WARP adapter - software rasterizer (Windows Advanced Rasterization Platform - WARP) 
+	bool mUseWarp = false;
+	// The number of back buffers for the swap chain.
+	static const uint8_t mNumFrames = 4;
+	D3D12_VIEWPORT m_viewport;
+	D3D12_RECT m_scissorRect;
 
-	// Window rectangle (used to toggle fullscreen state).
-	RECT g_WindowRect;
-
-	// DirectX 12 Objects
-	// Dx12 Device object
-	ComPtr<ID3D12Device2> g_Device;
-	// Dx12 command queue
-	ComPtr<ID3D12CommandQueue> g_CommandQueue;
+	// Pipline objects
+	Microsoft::WRL::ComPtr<ID3D12Device2> mDevice;
+	Microsoft::WRL::ComPtr<ID3D12CommandQueue>  mCommandQueue;
 	// IDXGISwapChain4 interface defines swap chain - Responsible for resenting the rendered image to window
 	// Created with a number of back buffers resources
-	ComPtr<IDXGISwapChain4> g_SwapChain;
-	// Pointers to said back buffers tracked
+	Microsoft::WRL::ComPtr<IDXGISwapChain4> mSwapChain;
 	// all back buffers &  textures  are referenced by ID3D12Resource
-	ComPtr<ID3D12Resource> g_BackBuffers[g_NumFrames];
-	// GPU commands are recorded into ID3D12GraphicsCommandList - uses a single thread with more commandList using different threads
-	ComPtr<ID3D12GraphicsCommandList> g_CommandList;
-	
-	ComPtr<ID3D12CommandAllocator> g_CommandAllocators[g_NumFrames];
+	Microsoft::WRL::ComPtr<ID3D12Resource> mRenderTargets[mNumFrames];
 	// Used to store descriptor heap that contains render target views for swap chain back buffers
-	ComPtr<ID3D12DescriptorHeap> g_RTVDescriptorHeap;
-	// size of single rvt descriptor 
-	UINT g_RTVDescriptorSize;
-	// Depending on flip odel of swap chain the index of current back buffer may not be sequential / hold creent index
-	UINT g_CurrentBackBufferIndex;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mRTVDescriptorHeap;
+	// Serves as backing memory for recording Gpu commands into command list cannot be reused unless all 
+	//commands that have been recorded are finished executing on gpu
+	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> mCommandAllocator;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> mRootSignature;
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> mPipelineState;
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList2> mCommandList;
+	UINT mRTVDescriptorSize;
 
 	// Synchronization objects
-	ComPtr<ID3D12Fence> g_Fence;
-	// the next fence alue to signal is stored below
-	uint64_t g_FenceValue = 0;
-	// ised to track fence values that used to signal command queue for particular frame
-	uint64_t g_FrameFenceValues[g_NumFrames] = {};
+	Microsoft::WRL::ComPtr<ID3D12Fence> mFence;
 	// handle to OS event object used to receive the notification that fence has reached value
-	HANDLE g_FenceEvent;
+	HANDLE mFenceEvent;
+	// the next fence value to signal is stored below
+	uint64_t mFenceValue;
+	UINT mframeIndex;
 
-	// By default, enable V-Sync.
-	// Can be toggled with the V key.
-	bool g_VSync = true;
-	bool g_TearingSupported = false;
-	// By default, use windowed mode.
-	// Can be toggled with the Alt+Enter or F11
-	bool g_Fullscreen = false;
+private:
+	struct Vertex
+	{
+		DirectX::XMFLOAT4 position;
+		DirectX::XMFLOAT4 color;
+	};
 
-	//Rendering space
-	// Serves as backing memory for recording Gpu commands into command list cannot be reused unless all commands that have been recorded
-	// are finished executing on gpu
-	ComPtr<ID3D12CommandAllocator> commandAllocator;
-	ComPtr<ID3D12Resource> backBuffer;
+	float mAspectRatio;
 
+	// App resources.
+	Microsoft::WRL::ComPtr<ID3D12Resource> m_vertexBuffer;
+	D3D12_VERTEX_BUFFER_VIEW m_vertexBufferView;
 };
 
-
-
-/*
-	- Register the window class
-	- Create the window
-	- Query the GPU adapters
-	- Create a DirectX 12 device
-	- Create a command queue
-	- Create a swap chain
-	- Create command allocator & command list
-	- Handle GPU synchronization
-	- Update & Render
-	- Handle resizing
-	- Handle full-screen toggling
-*/

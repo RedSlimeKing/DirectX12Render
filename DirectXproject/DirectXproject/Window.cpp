@@ -6,11 +6,12 @@
 //Access to SDL_SysWMinfo
 #include <SDL_syswm.h>
 
-Window::Window(int x_, int y_){
+Window::Window(int width, int height){
 	window = nullptr;
 	screenSurface = nullptr;
-	x = x_;
-	y = y_;
+	x = width;
+	y = height;
+	isInit = false;
 }
 
 Window::~Window() {
@@ -38,6 +39,7 @@ bool Window::Initialize() {
 		return false;
 	}
 
+	isInit = true;
 	return true;
 }
 void Window::Destroy() {
